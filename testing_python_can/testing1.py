@@ -29,11 +29,11 @@ while True:
     received_message_ID = (((received_message.__str__()).split('ID: ', 1)[1])[0:8])
     try:
         if (received_message_ID == '18ff50e5'):
-            voltage_integer = (received_message.data[0]*256) + (received_message.data[1])
-            voltage_float_whole = int(str(voltage_integer)[0:2])
-            voltage_float_fractional = int(str(voltage_integer)[2])
-            voltage_float = voltage_float_whole + voltage_float_fractional/10
-            # print (voltage_float)
+            charge_voltage_integer = (received_message.data[0]*256) + (received_message.data[1])
+            charge_voltage_float_whole = int(str(charge_voltage_integer)[0:2])
+            charge_voltage_float_fractional = int(str(charge_voltage_integer)[2])
+            charge_voltage_float = charge_voltage_float_whole + charge_voltage_float_fractional/10
+            # charge_voltage_float
     except:
         pass
 
