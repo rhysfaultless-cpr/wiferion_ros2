@@ -29,13 +29,12 @@ while True:
     received_message_ID = (((received_message.__str__()).split('ID: ', 1)[1])[0:8])
     try:
         if (received_message_ID == '18ff50e5'):
-            voltage_integer = (received_message.data[0]*255) + (received_message.data[1])
+            voltage_integer = (received_message.data[0]*256) + (received_message.data[1])
             voltage_float_whole = int(str(voltage_integer)[0:2])
             voltage_float_fractional = int(str(voltage_integer)[2])
             voltage_float = voltage_float_whole + voltage_float_fractional/10
-            print (voltage_float)
+            # print (voltage_float)
     except:
-        print (received_message)
         pass
 
 can_bus.shutdown()
