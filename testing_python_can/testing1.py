@@ -52,6 +52,28 @@ while True:
             # note that this has not been tested
             # note that there may be issues related to signed, as the charger reports a magnitude, redardless if it is charging, or consuming.
             # this program may need some logic to note the charger's status, and then specify a current vector, + / -
+
+
+            charge_status_integer = received_message.data[7]
+            # charge_status_string named values per the Wiferion manual
+            if (charge_status_integer == 0):
+                charge_status_string = 'Idle'
+            elif (charge_status_integer == 1):
+                charge_status_string = 'Charging'
+            elif (charge_status_integer == 2):
+                charge_status_string = 'Charging constant current'
+            elif (charge_status_integer == 3):
+                charge_status_string = 'Charging constant voltage'
+            elif (charge_status_integer == 4):
+                charge_status_string = 'Charging pre-charge'
+            elif (charge_status_integer == 5):
+                charge_status_string = 'Charging second constant voltage'
+            elif (charge_status_integer == 6):
+                charge_status_string = 'Battery full'
+            elif (charge_status_integer == 7):
+                charge_status_string = 'Stopped'
+            else:
+                charge_status_string = 'Error'
     except:
         pass
 
