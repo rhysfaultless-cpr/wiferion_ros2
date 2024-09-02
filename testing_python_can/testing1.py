@@ -34,6 +34,24 @@ while True:
             charge_voltage_float_fractional = int(str(charge_voltage_integer)[2])
             charge_voltage_float = charge_voltage_float_whole + charge_voltage_float_fractional/10
             # charge_voltage_float
+
+
+            charge_current_integer = (received_message.data[2]*256) + (received_message.data[3])
+            #print(charge_current_integer)
+            if (charge_current_integer < 10):
+                charge_current_float_whole = int(('00'+str(charge_current_integer))[0:2])
+                charge_current_float_fractional = int(('00'+str(charge_current_integer))[2])
+            elif (charge_current_integer < 100):
+                charge_current_float_whole = int(('0'+str(charge_current_integer))[0:2])
+                charge_current_float_fractional = int(('0'+str(charge_current_integer))[2])
+            else:
+                charge_current_float_whole = int(str(charge_current_integer)[0:2])
+                charge_current_float_fractional = int(str(charge_current_integer)[2])
+            charge_current_float = charge_current_float_whole + charge_current_float_fractional/10
+            # charge_current_float
+            # note that this has not been tested
+            # note that there may be issues related to signed, as the charger reports a magnitude, redardless if it is charging, or consuming.
+            # this program may need some logic to note the charger's status, and then specify a current vector, + / -
     except:
         pass
 
