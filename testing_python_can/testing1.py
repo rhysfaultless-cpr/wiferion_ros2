@@ -27,22 +27,15 @@ can_bus = can.ThreadSafeBus(interface='socketcan', channel='can0') # no kernel f
 while True:
     received_message = can_bus.recv()
     received_message_ID = (((received_message.__str__()).split('ID: ', 1)[1])[0:8])
-    # print(received_message_ID)
-    if (received_message_ID == '18ff50e5'):
+    try:
+        if (received_message_ID == '18ff50e5'):
+            voltage_integer = (received_message.data[0]*255) + (received_message.data[1])
+            voltage_float_whole = int(str(voltage_integer)[0:2])
+            voltage_float_fractional = int(str(voltage_integer)[2])
+            voltage_float = voltage_float_whole + voltage_float_fractional/10
+            print (voltage_float)
+    except:
         print (received_message)
-        print (received_message.data)
+        pass
 
 can_bus.shutdown()
-
-
-
-# for msg in can_bus.recv():
-#     print(msg.data)
-
-# note that 25.5 V = \x00\xff
-#   ff = 255
-#   maybe this means 25.5 V
-# 25.6 V = \x01\x00
-#   so 25.5 + 0.1
-# 28.8 = \x01\x1f
-# 28.9 and greater causes a weird result. I assume this is related to an error state / overvoltage 
