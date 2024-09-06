@@ -2,7 +2,7 @@ import os
 from glob import glob
 from setuptools import find_packages, setup
 
-package_name = 'wiferion-ros2'
+package_name = 'wiferion_ros2'
 
 setup(
     name=package_name,
@@ -23,7 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'wiferion-ros2 = wiferion-ros2.wiferion-ros2:main',
+            'wiferion_ros2 = wiferion_ros2.wiferion_ros2:main',
         ],
     },
 )

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>wiferion-ros2</name>
+  <name>wiferion_ros2</name>
   <version>0.0.1</version>
   <description>Read CAN data from Wiferion etaLink mobile robot, publish as ROS topic</description>
   <maintainer email="rfaultless@clearpathrobotics.com">rfaultless</maintainer>

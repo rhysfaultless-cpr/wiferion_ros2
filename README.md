@@ -1,4 +1,4 @@
-# wiferion-ros2
+# wiferion_ros2
 
 ## setup Wiferion etaLink 1000
 - Using the BlueConfig application
