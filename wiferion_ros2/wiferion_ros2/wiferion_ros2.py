@@ -52,19 +52,22 @@ class WiferionCharger(Node):
         
 
     def timer_callback(self):
-        received_message = self.can_bus.recv()
-        received_message_ID = (((received_message.__str__()).split('ID: ', 1)[1])[0:8])
-
         try:
-            if (received_message_ID == '18ff50e5'):
-                charge_voltage_integer = (received_message.data[0]*256) + (received_message.data[1])
-                charge_voltage_float_whole = int(str(charge_voltage_integer)[0:2])
-                charge_voltage_float_fractional = int(str(charge_voltage_integer)[2])
-                charge_voltage_float = charge_voltage_float_whole + charge_voltage_float_fractional/10
-                # charge_voltage_float
-                msg_voltage = Float32()
-                msg_voltage.data = charge_voltage_float
-                self.charger_publisher_voltage.publish(msg_voltage)
+            while True:
+                received_message = self.can_bus.recv()
+                received_message_ID = (((received_message.__str__()).split('ID: ', 1)[1])[0:8])
+                if (received_message_ID == '18ff50e5'):
+                    charge_voltage_integer = (received_message.data[0]*256) + (received_message.data[1])
+                    charge_voltage_float_whole = int(str(charge_voltage_integer)[0:2])
+                    charge_voltage_float_fractional = int(str(charge_voltage_integer)[2])
+                    charge_voltage_float = charge_voltage_float_whole + charge_voltage_float_fractional/10
+                    # charge_voltage_float
+                    msg_voltage = Float32()
+                    msg_voltage.data = charge_voltage_float
+                    self.charger_publisher_voltage.publish(msg_voltage)
+                    break
+                else:
+                    pass
         except:
             pass
     
