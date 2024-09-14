@@ -65,6 +65,7 @@ class WiferionCharger(Node):
                 msg_voltage = Float32()
                 msg_voltage.data = charge_voltage_float
                 self.charger_publisher_voltage.publish(msg_voltage)
+                #self.charger_publisher_voltage.publish(30.25)
         except:
             pass
     
@@ -73,12 +74,13 @@ class WiferionCharger(Node):
         self.can_send_bus.shutdown()
         super().shutdown()
 
-
+    def update_charger_publishers(self):
+        self.charger_publisher_voltage = self.create_publisher(Float32, 'wiferion_charger_voltage', 10)
 
 def main(args=None):
     rclpy.init(args=args)
     wiferion_charger = WiferionCharger()
-    #wiferion_charger.update_charger_publishers()
+    wiferion_charger.update_charger_publishers()
     try:
         rclpy.spin(wiferion_charger)
     except KeyboardInterrupt:
