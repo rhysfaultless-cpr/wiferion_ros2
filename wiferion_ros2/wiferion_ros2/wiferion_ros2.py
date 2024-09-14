@@ -34,6 +34,7 @@ import can
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32
+from std_msgs.msg import String
 
 class WiferionCharger(Node):
     #def __init__(self, can_data):
@@ -51,6 +52,8 @@ class WiferionCharger(Node):
         self.charger_publisher_voltage = self.create_publisher(Float32, 'wiferion_charger_voltage', 10)
         self.charger_publisher_current = None
         self.charger_publisher_current = self.create_publisher(Float32, 'wiferion_charger_current', 10)
+        self.charger_publisher_status = None
+        self.charger_publisher_status = self.create_publisher(String, 'wiferion_charger_status', 10)
         
 
     def timer_callback(self):
@@ -90,6 +93,33 @@ class WiferionCharger(Node):
                     msg_current.data = charge_current_float
                     self.charger_publisher_current.publish(msg_current)
                     
+                    # status reading and conversion
+                    # charge_status_string values are per the Wiferion manual
+                    charge_status_integer = received_message.data[7]
+                    if (charge_status_integer == 0):
+                        charge_status_string = 'Idle'
+                    elif (charge_status_integer == 1):
+                        charge_status_string = 'Charging'
+                    elif (charge_status_integer == 2):
+                        charge_status_string = 'Charging constant current'
+                    elif (charge_status_integer == 3):
+                        charge_status_string = 'Charging constant voltage'
+                    elif (charge_status_integer == 4):
+                        charge_status_string = 'Charging pre-charge'
+                    elif (charge_status_integer == 5):
+                        charge_status_string = 'Charging second constant voltage'
+                    elif (charge_status_integer == 6):
+                        charge_status_string = 'Battery full'
+                    elif (charge_status_integer == 7):
+                        charge_status_string = 'Stopped'
+                    else:
+                        charge_status_string = 'Error'
+
+                    # status publishing ROS
+                    msg_status = String()
+                    msg_status.data = charge_status_string
+                    self.charger_publisher_status.publish(msg_status)
+
                     # stop looping, as a relevant CAN message was received
                     break
 
