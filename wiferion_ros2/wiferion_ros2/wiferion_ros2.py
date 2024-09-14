@@ -29,15 +29,12 @@
 
 
 import can
-# import queue
-# import threading
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32
 from std_msgs.msg import String
 
 class WiferionCharger(Node):
-    #def __init__(self, can_data):
     def __init__(self):
         super().__init__('WiferionCharger')
         self.declare_parameter('can_device', 'can0')
