@@ -35,37 +35,12 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32
 
-class WiferionCharger:
-    def __init__(self, can_data):
+class WiferionCharger(Node):
+    #def __init__(self, can_data):
+    def __init__(self):
         super().__init__('WiferionCharger')
         self.declare_parameter('can_device', 'can0')
         self.can_device = self.get_parameter('can_device').value
-        # self.get_logger().info("Using can_device: %s" % self.can_device)
-
-        # self.declare_parameter('pc_address', 0x40)
-        # self.pc_address = self.get_parameter('pc_address').value
-        # self.get_logger().info("Using PC address: 0x{:x}".format(self.pc_address))
-
-        # self.declare_parameter('charger_address', 0x0a) #todo
-        # self.charger_address = self.get_parameter('charger_address').value
-        # self.get_logger().info("Using charger address: 0x{:x}".format(self.charger_address))
-
-        # self.default_priority = 0x18
-        # self.can_rx_queue = queue.Queue()
-
-        # can_bus = can.ThreadSafeBus(interface='socketcan', channel='can0')
-        # self.can_bus = can.interface.Bus(self.can_device, bustype='socketcan')        
-        # Start a thread for receiving CAN messages
-        # self.can_recv_thread = threading.Thread(target=self.can_recv, daemon=True)
-        # self.can_recv_thread.start()
-
-        # self.queue_soc_of_total_voltage_current = queue.SimpleQueue()
-        # self.queue_charge_discharge_mos_status = queue.SimpleQueue()
-        # self.queue_status_information_i = queue.SimpleQueue()
-        # self.queue_battery_failure_status = queue.SimpleQueue()
-
-        # self.can_process_thread = threading.Thread(target=self.consume_can_rx_queue, daemon=True)
-        # self.can_process_thread.start()
 
         self.can_bus = can.ThreadSafeBus(interface='socketcan', channel='can0')
 
@@ -92,12 +67,18 @@ class WiferionCharger:
                 self.charger_publisher_voltage.publish(msg_voltage)
         except:
             pass
+    
+    def shutdown(self):
+        # Close the CAN bus when the node is shutting down
+        self.can_send_bus.shutdown()
+        super().shutdown()
 
 
-def main():
-    rclpy.init()
+
+def main(args=None):
+    rclpy.init(args=args)
     wiferion_charger = WiferionCharger()
-    wiferion_charger.update_charger_publishers()
+    #wiferion_charger.update_charger_publishers()
     try:
         rclpy.spin(wiferion_charger)
     except KeyboardInterrupt:
