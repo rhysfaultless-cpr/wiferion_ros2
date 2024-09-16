@@ -1,17 +1,17 @@
 # wiferion_ros2
 
-## setup Wiferion etaLink 1000
+## Setup Wiferion etaLink 1000
 - Using the BlueConfig application
   - Change the default CAN address to 11.
   - Change the default CAN bit rate from 500 kB to 250 kB.
 
-## hardware
+## Hardware
 * Wiferion etaLink 1000 mobile unit, powered with a 20 - 29 V supply _( instead of a 24 V LFP battery )_.
 * PEAK USB-CAN adapter.
 * 2X terminating resistors at 120 Ω, M-F DE-9.
 * Custom adapter cable, from an M12-5-A connctor, to a DE-9 connector
 
-## setup socketcan in Ubuntu
+## Setup socketcan in Ubuntu
 ```
 sudo ip link set can0 up type can bitrate 250000
 sudo ip link set can0 up
