@@ -50,6 +50,12 @@ can0  1FFD0B04   [8]  00 00 01 00 00 00 00 00
 can0  1FFD0B00   [8]  03 00 32 4E 00 35 2D 40
 ```
 
+## Published topics
+
+- /wiferion_charger_voltage
+- /wiferion_charger_current
+- /wiferion_charger_status
+
 ## References
 
 - https://github.com/hardbyte/python-can/blob/main/examples/vcan_filtered.py
