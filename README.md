@@ -50,19 +50,6 @@ can0  1FFD0B04   [8]  00 00 01 00 00 00 00 00
 can0  1FFD0B00   [8]  03 00 32 4E 00 35 2D 40
 ```
 
-
-## CAN filtering in Linux kernel
-
-The python-can library has a filtering function.
-This allows you to define what CAN messages are allowed to pass from the kernel level into Python.
-This enable-list should improve performance, as the Python program only sees messages related to the Wiferion wireless charger.
-
-```python
-filters = [
-    {"can_id":0x8FF50E5 , "can_mask": 0xFFFFFFF, "extended": True},
-]
-```
-
 ## References
 
 - https://github.com/hardbyte/python-can/blob/main/examples/vcan_filtered.py
